@@ -60,8 +60,8 @@ namespace {
   // -------------------------------------------------------------------------------- //
   // UPDATE THESE VARIABLES TO MATCH THE NUMBER AND LIST OF GESTURES IN YOUR DATASET  //
   // -------------------------------------------------------------------------------- //
-  constexpr int label_count = 10;
-  const char* labels[label_count] = {"0", "1", "2", "3", "4", "5", "6", "7", "8", "9"};
+  constexpr int label_count = 3;
+  const char* labels[label_count] = {"Window", "Door", "LED"};
 
 }  // namespace
 
@@ -267,8 +267,8 @@ void loop() {
     }
     InferenceDone =0; 
   }
-  else{
-    Serial.println("Waiting for Button Pressed");
-  }
+  // else{
+  //   Serial.println("Waiting for Button Pressed");
+  // }
   GestureState = 0;
 }

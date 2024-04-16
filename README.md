@@ -10,4 +10,8 @@
      2. Inference the motion
 
      Repeat 1,2  
+
+  ## Pin Connection
+     Arduino Nano BLE 33 SENSE ( https://docs.arduino.cc/tutorials/nano-33-ble-sense/uart/ )
+         
      

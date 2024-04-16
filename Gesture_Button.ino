@@ -61,7 +61,7 @@ namespace {
   // UPDATE THESE VARIABLES TO MATCH THE NUMBER AND LIST OF GESTURES IN YOUR DATASET  //
   // -------------------------------------------------------------------------------- //
   constexpr int label_count = 3;
-  const char* labels[label_count] = {"Window", "Door", "LED"};
+  const char* labels[label_count] = {"0", "1", "2"};   //{"Window", "Door", "LED"};
 
 }  // namespace
 
@@ -69,6 +69,8 @@ void setup() {
   // Start serial
   Serial.begin(9600);
   Serial.println("Started");
+
+  Serial1.begin(9600);            // initialize UART with baud rate of 9600
 
   // Start IMU
   if (!IMU.begin()) {
@@ -262,6 +264,8 @@ void loop() {
           }
         }
         TF_LITE_REPORT_ERROR(error_reporter, "Found %s (%d)", labels[max_index], max_score);
+        Serial1.write(labels[max_index]);
+        delay(250);
         InferenceDone = 1; 
       }
     }

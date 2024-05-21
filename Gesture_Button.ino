@@ -29,6 +29,9 @@ int buttonState = 0;  // variable for reading the pushbutton status
 int GestureState = 0;  // variable for reading the pushbutton status
 int InferenceDone = 0;
 
+#define MSG_BUFFER_SIZE	(50)
+char msg[MSG_BUFFER_SIZE];
+
 namespace {
 
   const int VERSION = 0x00000000;
@@ -182,17 +185,7 @@ void loop() {
     
 
   if (GestureState == 1) {
-    while(!InferenceDone){
-      BLEDevice central = BLE.central();
-    
-      // if a central is connected to the peripheral:
-      static bool was_connected_last = false;  
-      if (central && !was_connected_last) {
-        Serial.print("Connected to central: ");
-        // print the central's BT address:
-        Serial.println(central.address());
-      }
-      was_connected_last = central;
+    while(!InferenceDone){  //InferenceDone=0
 
       // make sure IMU data is available then read in data
       const bool data_available = IMU.accelerationAvailable() || IMU.gyroscopeAvailable();
@@ -271,8 +264,12 @@ void loop() {
     }
     InferenceDone =0; 
   }
-  // else{
-  //   Serial.println("Waiting for Button Pressed");
-  // }
+  while (Serial1.available() > 0) {
+    int receivedData = Serial1.read();   // read one byte from serial buffer and save to receivedData
+    //Serial.print(receivedData);
+    snprintf(msg, MSG_BUFFER_SIZE, "%c", receivedData);
+    Serial.print("Uart message: ");
+    Serial.println(msg);
+  }
   GestureState = 0;
 }
